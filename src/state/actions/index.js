@@ -6,3 +6,12 @@ export const retrieveAllLines = (data) => {
     })
   }
 }
+
+export function addFilterOption(filter) {
+  return (dispatch) => {
+    dispatch({
+      type: 'ADD_FILTER',
+      payload: filter,
+    })
+  }
+}

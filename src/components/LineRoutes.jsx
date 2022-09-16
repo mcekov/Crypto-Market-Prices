@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import { Sparklines, SparklinesLine } from 'react-sparklines'
 
 function LineRoutes({ line, idx }) {
-  console.log('LineRoutes: ', line)
   return (
     <tr className="h-[80px] border-b overflow-hidden">
       <td>{idx + 1}</td>

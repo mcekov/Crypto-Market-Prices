@@ -34,7 +34,7 @@ const Navbar = () => {
       </Link>
       <ul className="w-full p-4">
         <li onClick={handleNav} className="">
-          <Link to="/">Home</Link>
+          <Link to="/">All Lines</Link>
         </li>
       </ul>
       <div className="hidden md:block ml-auto">

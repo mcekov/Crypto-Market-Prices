@@ -1,16 +1,30 @@
 import React, { useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { useLocation, useParams } from 'react-router-dom'
 import LineRoutes from '../components/LineRoutes'
-import Map from '../components/Map'
+import MapItem from '../components/MapItem'
 
 function Line() {
   const [searchText, setSearchText] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
+
+  const state = useSelector((state) => state)
+
   const location = useLocation()
   const data = location.state
 
+  let { lineId } = useParams()
+
+  let line
+  state.allLines.forEach((el) => {
+    if (el.routes.find((r) => r.id === Number(lineId))) {
+      line = el.routes.find((r) => r.id === Number(lineId))
+    }
+  })
+
   return (
     <>
-      <Map />
+      <MapItem state={line} />
       <div className="rounded-div my-4">
         <div className="flex flex-col md:flex-row justify-start pt-4 pb-6 text-center md:text-right mt-[45px]">
           <h1 className="text-2xl font-bold ml-[45px]">Search Stop</h1>

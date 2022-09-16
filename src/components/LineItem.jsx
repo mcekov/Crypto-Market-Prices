@@ -6,9 +6,11 @@ function LineItem({ line, idx }) {
   return (
     <tr className="h-[80px] border-b overflow-hidden">
       <td>{idx + 1}</td>
+
       <td>
         <div>{line.line}</div>
       </td>
+      <td>{line.routes[0].transportType}</td>
       <td>
         {line.routes.map((route, index) => (
           <Link to={`/line/${route.id}`} state={route} key={index}>

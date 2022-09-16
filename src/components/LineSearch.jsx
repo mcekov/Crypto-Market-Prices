@@ -33,7 +33,8 @@ function LineSearch() {
           <thead>
             <tr>
               <th className="px-4">#</th>
-              <th className="text-left">Line</th>
+              <th>Line</th>
+              <th>Type</th>
               <th>Routes</th>
               <th>Chart</th>
               <th>Points</th>
@@ -49,6 +50,17 @@ function LineSearch() {
                   value.line.toLowerCase().includes(searchText.toLowerCase())
                 ) {
                   return value
+                }
+              }) // eslint-disable-next-line array-callback-return
+              .filter((filter) => {
+                if (state.filter === 'all') {
+                  return filter
+                } else if (state.filter === 'bus') {
+                  return filter.routes[0].transportType.toLowerCase() === 'a'
+                } else if (state.filter === 'tram') {
+                  return filter.routes[0].transportType.toLowerCase() === 'tm'
+                } else if (state.filter === 'trolley') {
+                  return filter.routes[0].transportType.toLowerCase() === 'tb'
                 }
               })
               .map((line, i) => (

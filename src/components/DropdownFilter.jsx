@@ -5,8 +5,27 @@ import { HiChevronDown } from 'react-icons/hi'
 import { BiBus } from 'react-icons/bi'
 import { MdOutlineTram } from 'react-icons/md'
 import { FaTram } from 'react-icons/fa'
+import { useDispatch } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { actionCreators } from '../state'
 
 export default function DropdownFilter() {
+  const dispatch = useDispatch()
+  const { addFilterOption } = bindActionCreators(actionCreators, dispatch)
+
+  const setAllFilter = () => {
+    addFilterOption('all')
+  }
+  const setBusFilter = () => {
+    addFilterOption('bus')
+  }
+  const setTramFilter = () => {
+    addFilterOption('tram')
+  }
+  const setTrolleyFilter = () => {
+    addFilterOption('trolley')
+  }
+
   return (
     <div className="text-right shadow-xl">
       <Menu as="div" className="relative inline-block text-left">
@@ -32,6 +51,20 @@ export default function DropdownFilter() {
               <Menu.Item>
                 {({ active }) => (
                   <button
+                    onClick={() => setAllFilter()}
+                    className={`${
+                      active ? 'bg-blue-500 text-white' : 'text-gray-900'
+                    } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                  >
+                    {/*  <BiBus className="mr-2 h-5 w-5" aria-hidden="true" /> */}
+                    All
+                  </button>
+                )}
+              </Menu.Item>
+              <Menu.Item>
+                {({ active }) => (
+                  <button
+                    onClick={() => setBusFilter()}
                     className={`${
                       active ? 'bg-blue-500 text-white' : 'text-gray-900'
                     } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
@@ -44,6 +77,7 @@ export default function DropdownFilter() {
               <Menu.Item>
                 {({ active }) => (
                   <button
+                    onClick={() => setTramFilter()}
                     className={`${
                       active ? 'bg-blue-500 text-white' : 'text-gray-900'
                     } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
@@ -56,6 +90,7 @@ export default function DropdownFilter() {
               <Menu.Item>
                 {({ active }) => (
                   <button
+                    onClick={() => setTrolleyFilter()}
                     className={`${
                       active ? 'bg-blue-500 text-white' : 'text-gray-900'
                     } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
