@@ -3,28 +3,7 @@ import L from 'leaflet'
 import 'leaflet-routing-machine'
 import { useMap } from 'react-leaflet'
 
-/* L.Marker.prototype.options.icon = L.icon({
-  iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png',
-}) */
-
 export default function Routing({ state }) {
-  console.log(state)
-  /*   const getStops = () => {
-    state.allLines.forEach((s) => {
-      s.routes.forEach((l) => {
-        l.stops.forEach((stop) => {
-          stopsList.push(stop.location)
-        })
-      })
-    })
-
-    return stopsList
-  }
-
-  const stops = getStops()
-
-  console.log(stops) */
-
   const map = useMap()
 
   useEffect(() => {

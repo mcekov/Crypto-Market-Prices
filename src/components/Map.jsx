@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux'
 
 function Map() {
   const state = useSelector((state) => state)
-  console.log('stattteee: ', state)
+
   let navigate = useNavigate()
 
   const polyline = []
