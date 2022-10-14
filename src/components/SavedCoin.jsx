@@ -2,15 +2,36 @@ import React from 'react'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { AiOutlineClose } from 'react-icons/ai'
+import { doc, onSnapshot, updateDoc } from 'firebase/firestore'
+import { UserAuth } from '../context/AuthContext'
+import { db } from '../firebase'
+import { useEffect } from 'react'
 
 function SavedCoin() {
-  const [coins, setCoins] = useState([
-    /* { symbol: '123', image: '', id: 'asdadawesd3523fsdf', rank: 5 }, */
-  ])
+  const [coins, setCoins] = useState([])
+  const { user } = UserAuth()
+
+  useEffect(() => {
+    onSnapshot(doc(db, 'users', `${user?.email}`), (doc) => {
+      setCoins(doc.data()?.watchList)
+    })
+  }, [user?.email])
+
+  const coinPath = doc(db, 'users', `${user?.email}`)
+  const deleteCoin = async (passedID) => {
+    try {
+      const result = coins.filter((item) => item.id !== passedID)
+      await updateDoc(coinPath, {
+        watchList: result,
+      })
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
 
   return (
     <div>
-      {coins.length === 0 ? (
+      {coins?.length === 0 ? (
         <p>
           You don't have any coins saved. Please save a coin first to watch
           list.
@@ -26,7 +47,7 @@ function SavedCoin() {
             </tr>
           </thead>
           <tbody>
-            {coins.map((coin) => (
+            {coins?.map((coin) => (
               <tr key={coin.id} className="h-[60px] overflow-hidden">
                 <td>{coin?.rank}</td>
                 <td>
@@ -43,7 +64,10 @@ function SavedCoin() {
                   </Link>
                 </td>
                 <td className="pl-8">
-                  <AiOutlineClose className="cursor-pointer" />
+                  <AiOutlineClose
+                    onClick={() => deleteCoin(coin.id)}
+                    className="cursor-pointer"
+                  />
                 </td>
               </tr>
             ))}
