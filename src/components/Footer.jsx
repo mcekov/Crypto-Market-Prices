@@ -42,16 +42,19 @@ function Footer() {
                   <input
                     type="email"
                     placeholder="Enter your email"
-                    className="bg-primary border border-input p-2 mr-2 w-full shadow-xl rounded-2xl md:w-auto"
+                    className="bg-primary border border-input p-2 mr-2 w-full shadow-xl rounded-2xl"
                   />
-                  <button className="bg-button text-btnText px-4 p-2 mr-2 w-full rounded-2xl shadow-xl hover:shadow-2xl md:w-auto my-2">
+                  <button className="bg-button text-btnText px-4 p-2 mr-2 w-full rounded-2xl shadow-xl hover:shadow-2xl my-2">
                     Sign up
                   </button>
                 </form>
               </div>
 
               <div className="flex py-4 justify-between text-accent">
-                <FaTwitter /> <FaFacebookF /> <FaReddit /> <FaGithub />
+                <FaTwitter />
+                <FaFacebookF />
+                <FaReddit />
+                <FaGithub />
               </div>
             </div>
           </div>
