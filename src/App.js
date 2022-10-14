@@ -1,49 +1,46 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { bindActionCreators } from 'redux'
 import { ThemeProvider } from './context/ThemeContext'
-
-import { actionCreators } from './state'
-
 import ErrorPage from './Pages/ErrorPage'
 import Navbar from './components/Navbar'
-import Home from './Pages/Home'
-import Line from './Pages/Line'
+import HomePage from './Pages/HomePage'
+import SingInPage from './Pages/SingInPage'
+import SingUpPage from './Pages/SingUpPage'
+import axios from 'axios'
+import AccountPage from './Pages/AccountPage'
+import CoinPage from './Pages/CoinPage'
+import Footer from './components/Footer'
 
 function App() {
   const [isLoading, setIsLoading] = useState(false)
-  const state = useSelector((state) => state)
+  const [coins, setCoins] = useState([])
 
-  const dispatch = useDispatch()
-  const { retrieveAllLines } = bindActionCreators(actionCreators, dispatch)
+  const url =
+    'https://api.coingecko.com/api/v3/coins/markets?vs_currency=eur&order=market_cap_desc&per_page=10&page=1&sparkline=true'
 
   useEffect(() => {
-    setIsLoading(true)
-
-    fetch('/api/data')
-      .then((res) => res.json())
-      .then((data) => {
-        retrieveAllLines(data)
-        setIsLoading(false)
-      })
-      .catch((err) => {
-        setIsLoading(false)
-      })
-  }, [])
+    axios.get(url).then((res) => {
+      setCoins(res.data)
+      console.log(res.data)
+    })
+  }, [url])
 
   return (
     <ThemeProvider>
       <Router>
         <Navbar />
         <Routes>
-          <Route path="/" element={<Home lines={state.allLines} />} />
-          <Route path="/line/:lineId" element={<Line />}>
-            <Route path=":lineId" />
-          </Route>
+          <Route path="/" element={<HomePage coins={coins} />} />
+          <Route path="/signIn" element={<SingInPage />} />
+          <Route path="/signUp" element={<SingUpPage />} />
+          <Route path="/account" element={<AccountPage />} />
           <Route path="*" element={<ErrorPage />} />
+          <Route path="/coin/:coinId" element={<CoinPage />}>
+            <Route path=":coinId" />
+          </Route>
         </Routes>
       </Router>
+      <Footer />
     </ThemeProvider>
   )
 }

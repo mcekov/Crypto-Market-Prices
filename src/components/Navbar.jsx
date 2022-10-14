@@ -1,34 +1,38 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import ThemeToggle from './ThemeToggle'
 import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai'
 
 const Navbar = () => {
   const [nav, setNav] = useState(false)
 
+  const navigate = useNavigate()
+
   const handleNav = () => {
     setNav(!nav)
   }
 
+  const handleSignOut = async () => {
+    try {
+      /*  await logout() */
+      navigate('/')
+    } catch (e) {
+      console.log(e.message)
+    }
+  }
+
+  const user = true
+
   return (
     <div className="rounded-div flex items-center justify-between h-20 font-bold">
       <Link to="/">
-        <img
-          className="h-8 w-8"
-          src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
-          alt="Workflow"
-        />
+        <h1 className="text-2xl">Cryptobase</h1>
       </Link>
-      <ul className="w-full p-4">
-        <li onClick={handleNav} className="">
-          <Link to="/">All Lines</Link>
-        </li>
-      </ul>
-      <div className="hidden md:block ml-auto">
+      <div className="hidden md:block">
         <ThemeToggle />
       </div>
 
-      {/* {user?.email ? (
+      {user?.email ? (
         <div>
           <Link to="/account" className="p-4">
             Account
@@ -47,7 +51,7 @@ const Navbar = () => {
             Sign Up
           </Link>
         </div>
-      )} */}
+      )}
 
       {/* Menu Icon */}
       <div onClick={handleNav} className="block md:hidden cursor-pointer z-10">
@@ -92,5 +96,4 @@ const Navbar = () => {
     </div>
   )
 }
-
 export default Navbar
