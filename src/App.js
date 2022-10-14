@@ -10,6 +10,7 @@ import axios from 'axios'
 import AccountPage from './Pages/AccountPage'
 import CoinPage from './Pages/CoinPage'
 import Footer from './components/Footer'
+import { AuthContextProvider } from './context/AuthContext'
 
 function App() {
   const [isLoading, setIsLoading] = useState(false)
@@ -27,20 +28,22 @@ function App() {
 
   return (
     <ThemeProvider>
-      <Router>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<HomePage coins={coins} />} />
-          <Route path="/signIn" element={<SingInPage />} />
-          <Route path="/signUp" element={<SingUpPage />} />
-          <Route path="/account" element={<AccountPage />} />
-          <Route path="*" element={<ErrorPage />} />
-          <Route path="/coin/:coinId" element={<CoinPage />}>
-            <Route path=":coinId" />
-          </Route>
-        </Routes>
-      </Router>
-      <Footer />
+      <AuthContextProvider>
+        <Router>
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<HomePage coins={coins} />} />
+            <Route path="/signIn" element={<SingInPage />} />
+            <Route path="/signUp" element={<SingUpPage />} />
+            <Route path="/account" element={<AccountPage />} />
+            <Route path="*" element={<ErrorPage />} />
+            <Route path="/coin/:coinId" element={<CoinPage />}>
+              <Route path=":coinId" />
+            </Route>
+          </Routes>
+        </Router>
+        <Footer />
+      </AuthContextProvider>
     </ThemeProvider>
   )
 }
